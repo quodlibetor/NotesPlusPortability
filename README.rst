@@ -4,8 +4,6 @@
 Make your Notes Plus notes readable on non-iPad browsers
 ========================================================
 
-.. contents::
-
 About
 -----
 
