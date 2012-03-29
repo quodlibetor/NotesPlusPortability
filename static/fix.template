@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# MIT License: Copyright Brandon W Maister <quodlibetor@gmail.com>
+# Use this as you wish, keep the fact that I originally wrote it as a
+# comment, please.
+
+function usage() {
+    echo "Usage:  fix 'PATH'"
+    echo "    where PATH is a NotesPlus notebook folder."
+}
+
+if [ -z "$1" ] ; then
+    usage
+    exit 1
+fi
+
+notesdir="$1"
+
+logfile=convert.log
+
+if which convert >/dev/null 2>&1 ; then
+    use_convert=x
+else
+    echo "You should install ImageMagick if you want the backgrounds to work"
+    echo "http://www.imagemagick.org"
+    echo
+    echo "This pass is just going to make things work offline"
+fi
+
+# main() is invoked after the definition of $css and $js, since they're
+# really friggin' long.
+function main() {
+    # while-find loop technique from http://stackoverflow.com/a/1120952/25616
+    while IFS= read -r -d '' file ; do
+        dir=$( dirname "$file" )
+
+        sed -e 's|http://new.notesplusapp.com|..|' "$file" >"$dir"/i.html
+        # create a backup once and only once!
+        if [ ! -f "$dir"/index.html.backup ] ; then
+            mv "$dir"/index.html "$dir"/index.html.backup
+        fi
+        mv "$dir"/i.html "$dir"/index.html
+
+        if [ -z "$use_convert" ] ; then
+            continue
+        fi
+
+        background="$dir"/resources/background
+        if [ -f "${background}.pdf" ] ; then
+            echo processing "$dir"
+            convert "${background}.pdf" "${background}.png" 2>>"$logfile"
+            echo "$iframehtml" > "$dir"/resources/iframe.html
+        else
+            echo ${background}.pdf does not exist.
+            echo If you expected to have a background for those notes, there is a problem.
+        fi
+    done < <( find "$notesdir" -wholename \*/index.html -print0 )
+
+    staticdir="${notesdir}/static"
+
+    echo "$staticdir"
+
+    [ ! -d "${staticdir}" ] && mkdir -p "${staticdir}"/{js,css}
+    echo -n "$css" > "${staticdir}/css/page.css"
+    echo -n "$js" > "${staticdir}/js/page.js"
+}
+
+css="
+%(css)s
+"
+
+IFS='\n' read -r -d '' js <<'THISISALONGEOF'
+%(js)s
+THISISALONGEOF
+
+main

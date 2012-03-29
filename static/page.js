@@ -1,4 +1,3 @@
-var iPad = navigator.userAgent.match(/iPad/i) != null;
 var DIM = {	'contentMarginWidth' : 10,
 		'contentMarginHeight' : 10,
 		'contentBorderWidth' : 10,
@@ -24,13 +23,8 @@ window.onload = function() {
 '<div id="content" style="width:' + (page['width'] + DIM['contentMarginWidth']) + 'px;height=' + (page['height'] + top) + 'px;top:' + top + 'px;">' +
 '<div id="pageBackground" style="width:' + page['width'] + 'px;height:' + page['height'] + 'px;">';
 
-    if( page['withPdfBackground'] && iPad ) {
-        innerHTML += '<iframe src="background.pdf" width="' + page['width'] + '" height="' + page['height'] + '" frameborder="0" marginwidth="0" marginheight="0"></iframe>';
-    }
-
-    innerHTML +=
-'</div>' +
-'<object id="svg"  data="page.svg" type="image/svg+xml" width="' + page['width'] + '" height="' + page['height'] + '"></object>';
+    innerHTML += '</div>'
+      + '<object id="svg"  data="page.svg" type="image/svg+xml" width="' + page['width'] + '" height="' + page['height'] + '"></object>';
 
     // border for page content
     var imgPre = staticUrl + '/images/GrayCarbon_ContentBorder';
@@ -55,4 +49,19 @@ window.onload = function() {
 
     document.getElementById('wrapper').innerHTML = innerHTML;
 
-}
+    var bgStyle = document.getElementById('pageBackground').style;
+    bgStyle.background = "url('resources/background.png') no-repeat center";
+    if (typeof bgStyle['backgroundSize'] !== 'undefined') {
+        bgStyle.backgroundSize = 'contain';
+    }
+
+    setTimeout(function(){
+        var svg = document.getElementById('svg').contentDocument;
+
+        if (svg) {
+            var rect = svg.getElementById('id-background-layer')
+                .getElementsByTagName('rect')[0];
+            rect.style.fillOpacity = 0;
+        }
+    }, 500);
+};
