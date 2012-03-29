@@ -38,7 +38,7 @@ That said: please email me (quodlibetor@gmail.com) if you have any problems or w
 Usage
 -----
 
-Download this project, and use ``fix`` as a command in the terminal.
+Download fix_, and use it as a command in the terminal.
 ``fix`` expects the path to your Notes Plus *notebook* directory::
 
     $ ./fix "~/DropBox/NotesPlus/GeographyNotes/chapter 1"
@@ -49,6 +49,8 @@ I recommend using the quotes unless you're sure that you don't need them.
 **Do Not** give ``fix`` the path to your NotesPlus folder!
 Things will break.
 Give it the path to a notebook folder.
+
+.. _fix: https://raw.github.com/quodlibetor/NotesPlusNotesPortability/master/fix
 
 License
 -------
