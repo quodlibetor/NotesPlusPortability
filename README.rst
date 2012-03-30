@@ -60,7 +60,7 @@ The resulting files work fine in Firefox, but to get it to open in Chrome you'll
 This is because of `a security "feature" of Chrome's`_.
 I haven't tested it anywhere else, but reports of success are very welcome.
 
-.. _fix: https://raw.github.com/quodlibetor/NotesPlusNotesPortability/master/fix
+.. _fix: https://raw.github.com/quodlibetor/NotesPlusPortability/master/fix
 .. _a security "feature" of Chrome's: http://code.google.com/p/chromium/issues/detail?id=40787
 
 License
