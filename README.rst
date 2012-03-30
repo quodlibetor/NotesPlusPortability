@@ -50,7 +50,18 @@ I recommend using the quotes unless you're sure that you don't need them.
 Things will break.
 Give it the path to a notebook folder.
 
+Browser Compatibility
+~~~~~~~~~~~~~~~~~~~~~
+
+The resulting files work fine in Firefox, but to get it to open in Chrome you'll need to open it from the command line::
+
+    $ chrome --allow-file-access-from-files "~/DropBox/NotesPlus/GeographyNotes/chapter 1"
+
+This is because of `a security "feature" of Chrome's`_.
+I haven't tested it anywhere else, but reports of success are very welcome.
+
 .. _fix: https://raw.github.com/quodlibetor/NotesPlusNotesPortability/master/fix
+.. _a security "feature" of Chrome's: http://code.google.com/p/chromium/issues/detail?id=40787
 
 License
 -------

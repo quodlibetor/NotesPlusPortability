@@ -206,15 +206,24 @@ window.onload = function() {
         bgStyle.backgroundSize = 'contain';
     }
 
-    setTimeout(function(){
-        var svg = document.getElementById('svg').contentDocument;
+    var object =  document.getElementById('svg');
+
+    object.addEventListener('load', function(){
+        var svg;
+
+        if (object.contentDocument) {
+            svg = object.contentDocument;
+        }
+        else {
+            svg = object.getSVGDocument();
+        }
 
         if (svg) {
             var rect = svg.getElementById('id-background-layer')
                 .getElementsByTagName('rect')[0];
             rect.style.fillOpacity = 0;
         }
-    }, 500);
+    }, false);
 };
 THISISALONGEOF
 
